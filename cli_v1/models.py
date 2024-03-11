@@ -12,13 +12,10 @@ from typing import Any, Optional
 
 from cli_v1.df_utils import EmailTable
 
-
 import sys
 
 # Get the directory where the data has been extracted
 data_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-
-
 
 class OutlookSender:
     def __init__(self, message_to, message_from, message_subject, message_body, attachment_filepath:list[Any]=None):
@@ -28,7 +25,7 @@ class OutlookSender:
         self.message_body = message_body
         self.attachment_filepaths = attachment_filepath
    
-    def send_mail_outlook(self, schedule_send_time: Optional[datetime] = None):
+    def send_mail_outlook(self, schedule_send_time: Optional[datetime] = None, default_attachments=None):
 
         outlook = win32com.client.gencache.EnsureDispatch("Outlook.Application")
         mail = outlook.CreateItem(0)
@@ -37,6 +34,10 @@ class OutlookSender:
         mail.To = self.message_to
         if isinstance(self.attachment_filepaths, list):
             for attachment in self.attachment_filepaths:
+                absolute_path = os.path.abspath(attachment)
+                mail.Attachments.Add(absolute_path)
+        if isinstance(default_attachments, list):
+            for attachment in default_attachments:
                 absolute_path = os.path.abspath(attachment)
                 mail.Attachments.Add(absolute_path)
         if schedule_send_time:
@@ -145,12 +146,3 @@ def spreadsheet_to_mail(df:pd.DataFrame, message_from, message_subject_prefix, m
     
     df_completed.to_csv(processed_spreadsheet, index=False)
 
-
-# print(email_table.ready_to_send)
-# for index, row in email_table.ready_to_send.iterrows():
-#     outlook = OutlookSender(row['email'],
-#                             from_address,
-#                             f"{message_subject_prefix}({row['name']})",
-#                             "Hello, this is a test email",
-#                             attachment_filepaths=row['attachment_filepaths'])
-#     outlook.send_mail_outlook(schedule_send_time=row['datetime'])
