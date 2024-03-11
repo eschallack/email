@@ -41,7 +41,7 @@ class OutlookSender:
                 absolute_path = os.path.abspath(attachment)
                 mail.Attachments.Add(absolute_path)
         if schedule_send_time:
-            aware_schedule_send_time = schedule_send_time
+            aware_schedule_send_time = schedule_send_time.astimezone(pytz.timezone('US/Eastern'))
             mail.DeferredDeliveryTime = aware_schedule_send_time
         print(f"Sending email to {self.message_to}...")
         mail.Send()
