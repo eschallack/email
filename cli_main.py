@@ -5,22 +5,6 @@ from cli_v1.df_utils import EmailTable, get_all_files, pw_protect_pdf, parse_fil
 import settings
 from datetime import datetime, timedelta
 import pandas as pd
-    # based on this: {
-#     "email_method": "outlook",
-#     "login_email": "",
-#     "password": "",
-#     "default_from_address": "eschalla@depaul.edu",
-#     "default_message_subject": "dfhdfghf",
-#     "default_message_body": "dfhhgfd",
-#     "default_attachment_filepaths": [
-#         "C:/Users/Evan Schallack/Desktop/em-log/attachment_awesome.txt"
-#     ],
-#     "input_spreadsheet": "C:/Users/Evan Schallack/Desktop/em-log/src/data/input_data/emails.csv",
-#     "output_spreadsheet": "C:/Users/Evan Schallack/Desktop/em-log/backend/src/data/output_data/output.csv",
-#     "processed_spreadsheet": "C:/Users/Evan Schallack/Desktop/em-log/backend/src/data/processed_data/processed.csv",
-#     "attachment_lookup_folder": "C:/Users/Evan Schallack/Desktop/em-log/src/pdfs/input_pdf",
-#     "output_folder": "C:/Users/Evan Schallack/Desktop/em-log/src/pdfs/output_pdf"
-# }
     
 if __name__ == "__main__":
     email_method = settings.email_method
@@ -79,7 +63,6 @@ if __name__ == "__main__":
         
         df.to_csv(processed_spreadsheet)
     if args.send_emails:
-        # based on this function: def spreadsheet_to_mail(df:pd.DataFrame, message_from, message_subject_prefix, messgae_body, method='smtp',global_attachment=None, output_spreadsheet:str=None, processed_spreadsheet:str=None):
         df = pd.read_csv(processed_spreadsheet)
         for index, row in df.iterrows():
             if row['ready_to_send'] == False:
@@ -94,11 +77,7 @@ if __name__ == "__main__":
                 outlook = OutlookSender(
                      message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
-                outlook.send_mail_outlook()
+                outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_attachment_filepaths)
             
-        # outlook = OutlookSender(
-        #     message_to=
 
-        # )
-        # outlook.send_mail_outlook()
         
