@@ -69,6 +69,7 @@ if __name__ == "__main__":
                 print('did not send')
             elif row['ready_to_send'] == True:
                 # each row is an email argument
+                ssn = row['ssn']
                 message_to = row['email']
                 message_from = default_from_address
                 message_subject = f"{default_message_subject} ({row['name']})"
@@ -77,6 +78,7 @@ if __name__ == "__main__":
                 outlook = OutlookSender(
                      message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
+                default_pdf = pw_protect_pdf(file, "password")
                 outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_attachment_filepaths)
             
 
