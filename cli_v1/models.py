@@ -41,7 +41,7 @@ class OutlookSender:
             for attachment in default_attachments:
                 absolute_path = os.path.abspath(attachment)
                 print(type(default_attachments))
-                print(f"these are the default attachments i will send:{default_attachments}"
+                print(f"these are the default attachments i will send:{default_attachments}")
                 mail.Attachments.Add(absolute_path)
         if schedule_send_time:
             aware_schedule_send_time = schedule_send_time.astimezone(pytz.timezone('US/Eastern'))
