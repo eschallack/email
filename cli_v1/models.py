@@ -11,8 +11,8 @@ import win32com.client
 from typing import Any, Optional
 
 from cli_v1.df_utils import EmailTable
-
 import sys
+import ast
 
 # Get the directory where the data has been extracted
 data_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +23,7 @@ class OutlookSender:
         self.message_from = message_from
         self.message_subject = message_subject
         self.message_body = message_body
-        self.attachment_filepaths = attachment_filepath
+        self.attachment_filepaths = ast.literal_eval(attachment_filepath)
         print(f"attachment at class instantiation: {attachment_filepath}")
     def send_mail_outlook(self, schedule_send_time: Optional[datetime] = None, default_attachments=None):
         outlook = win32com.client.gencache.EnsureDispatch("Outlook.Application")
