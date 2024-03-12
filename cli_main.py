@@ -78,7 +78,8 @@ if __name__ == "__main__":
                 outlook = OutlookSender(
                      message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
-                default_pdf = pw_protect_pdf(file, "password")
+                for file in default_attachment_filepaths:
+                    default_pdf = pw_protect_pdf(file, ssn)
                 outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_attachment_filepaths)
             
 
