@@ -34,11 +34,13 @@ class OutlookSender:
         if isinstance(self.attachment_filepaths, list):
             for attachment in self.attachment_filepaths:
                 absolute_path = os.path.abspath(attachment)
+                print(type(self.attachment_filepaths))
                 print(f"these are the individual specific attachments i will send:{self.attachment_filepaths}"
                 mail.Attachments.Add(absolute_path)
         if isinstance(default_attachments, list):
             for attachment in default_attachments:
                 absolute_path = os.path.abspath(attachment)
+                print(type(default_attachments))
                 print(f"these are the default attachments i will send:{default_attachments}"
                 mail.Attachments.Add(absolute_path)
         if schedule_send_time:
