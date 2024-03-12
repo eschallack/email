@@ -71,7 +71,7 @@ if __name__ == "__main__":
                 # each row is an email argument
                 message_to = row['email']
                 message_from = default_from_address
-                message_subject = f"{default_message_subject} ({row['name']})
+                message_subject = f"{default_message_subject} ({row['name']})"
                 message_body = default_message_body
                 attachment_filepath = row['attachment_filepaths']
                 outlook = OutlookSender(
