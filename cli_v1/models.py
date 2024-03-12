@@ -21,7 +21,7 @@ class OutlookSender:
     def __init__(self, client_name, message_to, message_from, message_subject, message_body, attachment_filepath:list[Any]=None):
         self.message_to = message_to
         self.message_from = message_from
-        self.message_subject = f"{message_subject} ({client_name})
+        self.message_subject = message_subject
         self.message_body = message_body
         self.attachment_filepaths = ast.literal_eval(attachment_filepath)
         print(f"attachment at class instantiation: {attachment_filepath}")
