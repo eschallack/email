@@ -35,7 +35,7 @@ class OutlookSender:
             for attachment in self.attachment_filepaths:
                 absolute_path = os.path.abspath(attachment)
                 print(type(self.attachment_filepaths))
-                print(f"these are the individual specific attachments i will send:{self.attachment_filepaths}"
+                print(f"these are the individual specific attachments i will send:{self.attachment_filepaths}")
                 mail.Attachments.Add(absolute_path)
         if isinstance(default_attachments, list):
             for attachment in default_attachments:
