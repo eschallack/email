@@ -79,7 +79,9 @@ if __name__ == "__main__":
                      message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
                 for file in default_attachment_filepaths:
-                    default_pdf = pw_protect_pdf(file, ssn)
+                    file_name = os.path.basename(file)
+                    output_pdf_path = f"{output_folder}/{file_name}"
+                    default_pdf = pw_protect_pdf(file, ssn, output_pdf_path)
                 outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_attachment_filepaths)
             
 
