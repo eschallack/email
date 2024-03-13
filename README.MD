@@ -1,6 +1,6 @@
 TO INSTALL:
 
- - make sure you have installed python 3.11.7 (the python install should be relatively easy, but DO NOT SPEED THROUGH IT! there is a very important screen where, in the bottom left hand corner, there is a checkbox that says something like "Add python to path". **MAKE SURE "Add python to path" IS CHECKED!** otherwise you will have to manually add python to your path, which is not fun and can cause many problems).
+ - make sure you have installed python 3.11.7 (the python install should be relatively easy, but there is a very important screen where, in the bottom left hand corner, there is a checkbox that says something like "Add python to path". **MAKE SURE "Add python to path" IS CHECKED!** otherwise you will have to manually add python to your path, which is not fun and can cause many problems).
  - check if python is installed by running the following command in your terminal:
  ```bash
 python --version
@@ -38,4 +38,4 @@ python --version
       python cli_main.py --find_pdfs
       python cli_main.py --pw_protect
       python cli_main.py --schedule_emails
-      python cli_main.py --send_emails (if you want to test this command before running it, make a backup copy of the spreadsheet and change all of the emails to your own email, the send. they should go to yourself. then, delete the testing version, and replace it with the old correct version.)
+      python cli_main.py --send_emails (if you want to test this command before running it, make a backup copy of the spreadsheet and change all of the emails to your own email, then send. they should go to yourself. then, delete the testing version, and replace it with the old correct version.)

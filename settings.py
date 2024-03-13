@@ -52,3 +52,5 @@ attachment_lookup_folder = r"C:\Users\Evan Schallack\Desktop\em-log-v2\src\pdfs\
 
 # path to where the password protected pdfs will be exported to
 output_folder = r"C:\Users\Evan Schallack\Desktop\em-log-v2\src\pdfs\input_pdf"
+
+protect_pdf_mode = True # if true, the program will password protect the pdfs. if false, it will not.

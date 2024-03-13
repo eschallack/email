@@ -18,12 +18,14 @@ if __name__ == "__main__":
     attachment_lookup_folder = settings.attachment_lookup_folder
     output_folder = settings.output_folder
     parser = argparse.ArgumentParser(description="Send emails to clients")
+    protect_pdf_mode = settings.protect_pdf_mode
     
     parser.add_argument("--find_pdfs", action="store_true", help="find pdf paths")
     parser.add_argument("--pw_protect", action="store_true", help="password protect pdfs")
     parser.add_argument("--schedule_emails", action="store_true", help="schedule emails")
     parser.add_argument("--test_email", action="store_true", help="send all the processed info, just to yourself")
     parser.add_argument("--send_emails", action="store_true", help="go go go go go")
+    
     
     args = parser.parse_args()
     if args.find_pdfs:
@@ -34,6 +36,7 @@ if __name__ == "__main__":
         df = em_tbl.find_matching_files()
         df.to_csv(output_spreadsheet)
     if args.pw_protect:
+        
         # if the output folder doesn't exist, create it
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
@@ -79,11 +82,15 @@ if __name__ == "__main__":
                      message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
                 default_pdfs = []
-                for file in default_attachment_filepaths:
-                    file_name = os.path.basename(file)
-                    output_pdf_path = f"{output_folder}/{file_name}"
-                    default_pdf = pw_protect_pdf(file, ssn, output_pdf_path)
-                    default_pdfs.append(default_pdf)
+                if default_attachment_filepaths:
+                    for file in default_attachment_filepaths:
+                        file_name = os.path.basename(file)
+                        output_pdf_path = f"{output_folder}/{file_name}"
+                        if protect_pdf_mode:
+                            default_pdf = pw_protect_pdf(file, ssn, output_pdf_path)
+                        default_pdfs.append(default_pdf)
+                
+                schedule_send_time=row['datetime']
                 outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_pdfs)
             
 
