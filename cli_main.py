@@ -89,8 +89,10 @@ if __name__ == "__main__":
                         if protect_pdf_mode:
                             default_pdf = pw_protect_pdf(file, ssn, output_pdf_path)
                         default_pdfs.append(default_pdf)
-                
-                schedule_send_time=row['datetime']
+                if 'datetime' in df.columns:
+                    schedule_send_time=row['datetime']
+                else:
+                    schedule_send_time=None
                 outlook.send_mail_outlook(schedule_send_time=row['datetime'], default_attachments=default_pdfs)
             
 
