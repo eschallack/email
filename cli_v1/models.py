@@ -23,7 +23,7 @@ class OutlookSender:
         self.message_from = message_from
         self.message_subject = message_subject
         self.message_body = message_body
-        self.attachment_filepaths = ast.literal_eval(attachment_filepath)
+        self.attachment_filepaths = ast.literal_eval(attachment_filepath) if isinstance(attachment_filepath, str) else attachment_filepath
         print(f"attachment at class instantiation: {attachment_filepath}")
     def send_mail_outlook(self, schedule_send_time: Optional[datetime] = None, default_attachments=None):
         outlook = win32com.client.gencache.EnsureDispatch("Outlook.Application")
