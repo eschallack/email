@@ -72,6 +72,7 @@ if __name__ == "__main__":
                 print('did not send')
             elif row['ready_to_send'] == True:
                 # each row is an email argument
+                client_name = row['name']
                 ssn = row['ssn']
                 message_to = row['email']
                 message_from = default_from_address
@@ -79,7 +80,7 @@ if __name__ == "__main__":
                 message_body = default_message_body
                 attachment_filepath = row['attachment_filepaths']
                 outlook = OutlookSender(
-                     message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
+                    client_name, message_to, message_from, message_subject, message_body, attachment_filepath=attachment_filepath
                 )
                 default_pdfs = []
                 if default_attachment_filepaths:
