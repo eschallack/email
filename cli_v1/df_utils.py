@@ -13,7 +13,7 @@ class EmailTable:
         self.output_spreadsheet = output_spreadsheet
         self.pdf_input_folder = input_folder
         self.pdf_output_folder = output_folder
-        self.df_processed = pd.DataFrame(columns=['name', 'email', 'ssn', 'path_to_file', 'attachment_filepaths', 'ready_to_send'])
+        self.df_processed = pd.DataFrame(columns=['name', 'email', 'search_id', 'path_to_file', 'attachment_filepaths', 'ready_to_send'])
         self.global_attachment = global_attachment
     # @property
     # def ready_to_send(self) -> pd.DataFrame:
@@ -59,21 +59,21 @@ class EmailTable:
         
 
         
-        df = pd.DataFrame(columns=['name', 'email', 'ssn', 'path_to_file', 'attachment_filepaths', 'ready_to_send'])
+        df = pd.DataFrame(columns=['name', 'email', 'search_id', 'path_to_file', 'attachment_filepaths', 'ready_to_send'])
         for index, row in self.df.iterrows():
         # grab the data from the row, and store it into variables
             attachment_output_file_paths = []
             client_name = row['name']
             message_to = row['email']
-            ssn = row['ssn']
+            search_id = row['search_id']
             row['path_to_file'] = parse_file_list(client_name, pdf_paths)
             if len(row['path_to_file']) > 0:
-            # use the path_to_pdf and ssn to password protect the pdf. save it to a new location, and return the new filepath
+            # use the path_to_pdf and search_id to password protect the pdf. save it to a new location, and return the new filepath
                 for path in row['path_to_file']:
                     file_name = os.path.basename(path)
                     output_pdf_path = f"{self.pdf_output_folder}/{file_name}"
                     if not Path(output_pdf_path).exists():
-                        attachment_output_file_paths.append(pw_protect_pdf(path, ssn, output_pdf_path))
+                        attachment_output_file_paths.append(pw_protect_pdf(path, search_id, output_pdf_path))
                     elif Path(output_pdf_path).exists():
                         attachment_output_file_paths.append(output_pdf_path)
             
@@ -112,9 +112,9 @@ class EmailTable:
     def validate_csv(self) -> pd.DataFrame:
         input_df_col_list = self.df.columns.tolist()
         # the columns that we expect to have before processing
-        unprocessed_col_list = ['name', 'email', 'ssn']
+        unprocessed_col_list = ['name', 'email', 'search_id']
         # the columns that we expect to have after processing
-        processed_col_list = ['name', 'email', 'ssn', 'path_to_file', 'attachment_filepaths', 'ready_to_send']
+        processed_col_list = ['name', 'email', 'search_id', 'path_to_file', 'attachment_filepaths', 'ready_to_send']
         
         #  if not all the columns that we expect to have before processing are in the input spreadsheet, raise a ValueError 
         if not all(x in input_df_col_list for x in unprocessed_col_list):

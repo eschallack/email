@@ -9,7 +9,6 @@ from datetime import datetime
 import pytz
 import win32com.client
 from typing import Any, Optional
-
 from cli_v1.df_utils import EmailTable
 import sys
 import ast
@@ -109,8 +108,6 @@ def login_smtp(login_email:str, password:str, host:str='smtp.gmail.com', port:in
     print(f"logging in with {login_email} and {password}")
     server.login(login_email, password)
     return server
-
-
 
 def spreadsheet_to_mail(df:pd.DataFrame, message_from, message_subject_prefix, messgae_body, method='smtp',global_attachment=None, output_spreadsheet:str=None, processed_spreadsheet:str=None):
     df_completed = pd.DataFrame(columns=df.columns)

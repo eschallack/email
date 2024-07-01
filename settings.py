@@ -20,7 +20,6 @@ default_message_subject = "Hi there!"
 
 # body text:
 default_message_body = """Dear Client,\n\n \\n\n Sincerely, \n\n """
-# TODO: make sure you add newline breaks (like this: \n) when you want to add newlines. think of each as hitting the enter key once.
 
 # global attachments. these wll be sent to all clients that have their corresponding pdf found.
 default_attachment_filepaths = [
@@ -34,7 +33,7 @@ default_attachment_filepaths = [
 # input_spreadsheet: Must be a .csv file, and must include the following columns:
 #       name
 #       email
-#       ssn
+#       search_value
 # if these are not present, the program will throw an error.
 
 input_spreadsheet = "emails.csv"

@@ -6,6 +6,7 @@ import random
 from datetime import datetime, timedelta
 import platform
 from typing import Optional, Any
+
 def add_datetime(df: pd.DataFrame, start_time: datetime, min_increment: int, random_range: int) -> pd.DataFrame:
     current_time = start_time
     datetime_list = []

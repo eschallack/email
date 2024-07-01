@@ -1,12 +1,12 @@
 import os
 import argparse
-from cli_v1.models import OutlookSender, SMTPSender
-from cli_v1.df_utils import EmailTable, get_all_files, pw_protect_pdf, parse_file_list
+from models import OutlookSender, SMTPSender
+from df_utils import EmailTable, get_all_files, pw_protect_pdf, parse_file_list
 import settings
 from datetime import datetime, timedelta
 import pandas as pd
     
-if __name__ == "__main__":
+def cli_main():
     email_method = settings.email_method
     default_from_address = settings.default_from_address
     default_message_subject = settings.default_message_subject
@@ -17,14 +17,14 @@ if __name__ == "__main__":
     processed_spreadsheet = settings.processed_spreadsheet
     attachment_lookup_folder = settings.attachment_lookup_folder
     output_folder = settings.output_folder
-    parser = argparse.ArgumentParser(description="Send emails to clients")
+    parser = argparse.ArgumentParser(description="Send emails from a spreadsheet")
     protect_pdf_mode = settings.protect_pdf_mode
     
     parser.add_argument("--find_pdfs", action="store_true", help="find pdf paths")
     parser.add_argument("--pw_protect", action="store_true", help="password protect pdfs")
     parser.add_argument("--schedule_emails", action="store_true", help="schedule emails")
     parser.add_argument("--test_email", action="store_true", help="send all the processed info, just to yourself")
-    parser.add_argument("--send_emails", action="store_true", help="go go go go go")
+    parser.add_argument("--send_emails", action="store_true", help="Send all emails in your spreadsheet")
     
     
     args = parser.parse_args()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
             elif row['ready_to_send'] == True:
                 # each row is an email argument
                 client_name = row['name']
-                ssn = row['ssn']
+                search_id = row['search_id']
                 message_to = row['email']
                 message_from = default_from_address
                 message_subject = f"{default_message_subject} ({row['name']})"
@@ -88,7 +88,7 @@ if __name__ == "__main__":
                         file_name = os.path.basename(file)
                         output_pdf_path = f"{output_folder}/{file_name}"
                         if protect_pdf_mode:
-                            default_pdf = pw_protect_pdf(file, ssn, output_pdf_path)
+                            default_pdf = pw_protect_pdf(file, search_id, output_pdf_path)
                         default_pdfs.append(default_pdf)
                 if 'datetime' in df.columns:
                     schedule_send_time=row['datetime']
