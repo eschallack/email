@@ -1,7 +1,7 @@
 import os
 import argparse
-from models import OutlookSender, SMTPSender
-from df_utils import EmailTable, get_all_files, pw_protect_pdf, parse_file_list
+from cli_v1.models import OutlookSender, SMTPSender
+from cli_v1.df_utils import EmailTable, get_all_files, pw_protect_pdf, parse_file_list
 import settings
 from datetime import datetime, timedelta
 import pandas as pd
